@@ -253,7 +253,7 @@ export default function Dashboard() {
               >
                 <option value="ALL">All Stores</option>
                 <option value="Store 1">Store 1 - Main Showroom</option>
-                <option value="Store 2">Store 2 - Branch</option>
+                <option value="Store 2">Store 2 - Colombo 05</option>
               </select>
             </div>
           )}

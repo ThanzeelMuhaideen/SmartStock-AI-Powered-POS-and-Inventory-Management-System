@@ -15,6 +15,20 @@ import Transactions from './Transactions';
 import StockIntake from './StockIntake';
 import AIInsights from './AIInsights';
 
+// =========================================================================
+// CRITICAL FIX: Automatically attach the secure token to all requests
+// =========================================================================
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+// =========================================================================
+
 export default function App() {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
@@ -79,8 +93,7 @@ function POSInterface() {
     setError('');
     if (value.trim().length >= 2) {
       try {
-        // FIXED: Pointed to the products search route
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/search?query=${value}`);
+        const response = await axios.get(`http://localhost:5000/api/products/search?query=${value}`);
         setSearchResults(response.data);
         setShowDropdown(true);
       } catch (err) { console.error("Failed to fetch search results", err); }
@@ -111,8 +124,7 @@ function POSInterface() {
     e.preventDefault(); 
     if (!skuInput.trim()) return;
     try {
-      // FIXED: Pointed to fetch a single product by SKU
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${skuInput}`);
+      const response = await axios.get(`http://localhost:5000/api/products/${skuInput}`);
       addToCart(response.data);
     } catch (err) {
       setError(`Model '${skuInput.toUpperCase()}' not found.`);
@@ -144,8 +156,7 @@ function POSInterface() {
     setCustomerQuery(val);
     if (val.trim().length >= 2) {
       try {
-        // FIXED: Pointed to the customers search route
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/customers/search?query=${val}`);
+        const response = await axios.get(`http://localhost:5000/api/customers/search?query=${val}`);
         setCustomerResults(response.data);
         setShowCustDropdown(true);
       } catch (err) { console.error("Failed to search customers", err); }
@@ -177,7 +188,7 @@ function POSInterface() {
     };
 
     try {
-      const response = await axios.post(import.meta.env.VITE_API_URL + '/api/orders', orderData);
+      const response = await axios.post('http://localhost:5000/api/orders', orderData);
       alert(`Payment Successful! 🎉\nOrder #${response.data.orderId}\nTotal: Rs. ${grandTotal.toFixed(2)}`);
       setCart([]);
       setIsCheckoutOpen(false);

@@ -188,10 +188,10 @@ export default function StockIntake() {
                 <span className="font-bold text-sm">Store 1</span>
                 <span className="text-xs opacity-70">Main Showroom</span>
               </button>
-              <button type="button" onClick={() => setFormData({...formData, destination: 'Store 2 - Branch'})} className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${formData.destination === 'Store 2 - Branch' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-slate-200 text-slate-500 hover:border-slate-300'}`}>
+              <button type="button" onClick={() => setFormData({...formData, destination: 'Store 2 - Colombo 05'})} className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${formData.destination === 'Store 2 - Colombo 05' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-slate-200 text-slate-500 hover:border-slate-300'}`}>
                 <MapPin size={24} className="mb-1" />
                 <span className="font-bold text-sm">Store 2</span>
-                <span className="text-xs opacity-70">Branch Location</span>
+                <span className="text-xs opacity-70">Colombo 05</span>
               </button>
             </div>
           </div>
